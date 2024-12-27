@@ -34,11 +34,44 @@ module.exports = (sequelize, DataTypes) => {
           max: 5,
         },
       },
+      dose: {
+        type: DataTypes.STRING,
+        allowNull: true, // Optional field for comments about the dose
+      },
+      strain: {
+        type: DataTypes.STRING,
+        allowNull: true, // Optional field for comments about the strain
+      },
+      potency: {
+        type: DataTypes.STRING,
+        allowNull: true, // Optional field for comments about the potency
+      },
+      methodOfUse: {
+        type: DataTypes.STRING,
+        allowNull: true, // Optional field for comments on smoking, vaping, or ingestion
+      },
+      frequencyOfUse: {
+        type: DataTypes.STRING,
+        allowNull: true, // Optional field for comments about how often cannabis is used
+      },
+      age: {
+        type: DataTypes.STRING,
+        allowNull: true, // Optional field for comments about the user's age
+      },
+      gender: {
+        type: DataTypes.STRING,
+        allowNull: true, // Optional field for comments about the user's gender
+      },
+      physiology: {
+        type: DataTypes.STRING,
+        allowNull: true, // Optional field for comments about the user's physiology
+      },
     },
     {
       sequelize,
       modelName: 'Comment',
     }
   );
+
   return Comment;
 };

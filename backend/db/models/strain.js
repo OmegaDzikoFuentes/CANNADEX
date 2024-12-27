@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Strain.init(
     {
-      ownerId: {
+     ownerId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: { model: 'Users', key: 'id' },
@@ -53,11 +53,60 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DECIMAL,
         allowNull: false,
       },
+      euphoric: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      relaxed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      amused: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      giggly: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      creative: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      hungry: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      moreSensitiveToLight: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      moreSensitiveToColor: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      moreSensitiveToSound: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      moreSensitiveToTouch: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      moreSensitiveToTaste: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      moreSensitiveToSmell: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       sequelize,
       modelName: 'Strain',
     }
   );
+
   return Strain;
 };
