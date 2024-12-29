@@ -1,6 +1,6 @@
 const express = require('express');
 const { Op, Sequelize } = require('sequelize');
-const { Strain, Comment, StrainImage, User } = require('../../db/models'); // Include User model
+const { Strain, Comment, StrainImage, User, CommentImage } = require('../../db/models'); // Include User model
 const { check, validationResult } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
@@ -464,9 +464,26 @@ router.put('/:strainId', requireAuth, validateStrain, async (req, res, next) => 
       await strain.update({
         name,
         description,
-        price
+        flavor,
+        city,
+        state,
+        country,
+        potency,
+        shared,
+        price,
+        euphoric,
+        relaxed,
+        amused,
+        giggly,
+        creative,
+        hungry,
+        moreSensitiveToLight,
+        moreSensitiveToColor,
+        moreSensitiveToSound,
+        moreSensitiveToTouch,
+        moreSensitiveToTaste,
+        moreSensitiveToSmell,
       });
-
       // Return the updated strain data
       return res.json({
         id: strain.id,
@@ -613,7 +630,7 @@ router.post('/:strainId/images', requireAuth, upload.single('image'), async (req
       // Create a new strain image record
       const newImage = await StrainImage.create({
         strainId: strain.id,
-        url: req.file.path,  // Store the file path in the database (relative to your uploads folder)
+        url: `/uploads/${req.file.filename}`,  // Store the file path in the database (relative to your uploads folder)
         preview: preview // Boolean that marks if this image is a preview
       });
 
