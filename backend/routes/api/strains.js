@@ -85,7 +85,7 @@ router.get('/', async (req, res) => {
     where,
     attributes: {
       include: [
-        [Sequelize.fn('AVG', Sequelize.col('Comments.rating')), 'avgRating']
+        [Sequelize.fn('AVG', Sequelize.col('Comments.stars')), 'avgRating']
       ]
     },
     include: [
@@ -158,16 +158,84 @@ const upload = multer({
       .exists({ checkFalsy: true })
       .notEmpty()
       .withMessage('Description is required.'),
-    check('THC')
+    check('flavor')
       .exists({ checkFalsy: true })
       .notEmpty()
-      .isFloat({ min: 0, max: 100 })
-      .withMessage('THC must be between 0 and 100%.'),
-    check('CBD')
+      .withMessage('Flavor is required.'),
+    check('city')
       .exists({ checkFalsy: true })
       .notEmpty()
-      .isFloat({ min: 0, max: 100 })
-      .withMessage('CBD must be between 0 and 100%.'),
+      .withMessage('City is required.'),
+    check('state')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('State is required.'),
+    check('country')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('Country is required.'),
+    check('potency')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .isFloat({ min: 0 })
+      .withMessage('Potency must be a valid number.'),
+    check('shared')
+      .optional()
+      .isBoolean()
+      .withMessage('Shared must be a boolean.'),
+    check('price')
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .isFloat({ min: 0 })
+      .withMessage('Price must be a valid number.'),
+    check('euphoric')
+      .optional()
+      .isBoolean()
+      .withMessage('Euphoric must be a boolean.'),
+    check('relaxed')
+      .optional()
+      .isBoolean()
+      .withMessage('Relaxed must be a boolean.'),
+    check('amused')
+      .optional()
+      .isBoolean()
+      .withMessage('Amused must be a boolean.'),
+    check('giggly')
+      .optional()
+      .isBoolean()
+      .withMessage('Giggly must be a boolean.'),
+    check('creative')
+      .optional()
+      .isBoolean()
+      .withMessage('Creative must be a boolean.'),
+    check('hungry')
+      .optional()
+      .isBoolean()
+      .withMessage('Hungry must be a boolean.'),
+    check('moreSensitiveToLight')
+      .optional()
+      .isBoolean()
+      .withMessage('MoreSensitiveToLight must be a boolean.'),
+    check('moreSensitiveToColor')
+      .optional()
+      .isBoolean()
+      .withMessage('MoreSensitiveToColor must be a boolean.'),
+    check('moreSensitiveToSound')
+      .optional()
+      .isBoolean()
+      .withMessage('MoreSensitiveToSound must be a boolean.'),
+    check('moreSensitiveToTouch')
+      .optional()
+      .isBoolean()
+      .withMessage('MoreSensitiveToTouch must be a boolean.'),
+    check('moreSensitiveToTaste')
+      .optional()
+      .isBoolean()
+      .withMessage('MoreSensitiveToTaste must be a boolean.'),
+    check('moreSensitiveToSmell')
+      .optional()
+      .isBoolean()
+      .withMessage('MoreSensitiveToSmell must be a boolean.'),
     handleValidationErrors,
   ];
 
@@ -178,7 +246,29 @@ const upload = multer({
     upload.single('image'), // Handle single image upload
     validateStrain,
     async (req, res, next) => {
-      const { name, description, THC, CBD } = req.body;
+      const {
+        name,
+        description,
+        flavor,
+        city,
+        state,
+        country,
+        potency,
+        shared,
+        price,
+        euphoric,
+        relaxed,
+        amused,
+        giggly,
+        creative,
+        hungry,
+        moreSensitiveToLight,
+        moreSensitiveToColor,
+        moreSensitiveToSound,
+        moreSensitiveToTouch,
+        moreSensitiveToTaste,
+        moreSensitiveToSmell,
+      } = req.body;
       const ownerId = req.user.id; // Authenticated user's ID
       const image = req.file ? `/uploads/${req.file.filename}` : null; // Path to the uploaded image
 
@@ -188,8 +278,25 @@ const upload = multer({
           ownerId,
           name,
           description,
-          THC,
-          CBD,
+          flavor,
+          city,
+          state,
+          country,
+          potency,
+          shared,
+          price,
+          euphoric,
+          relaxed,
+          amused,
+          giggly,
+          creative,
+          hungry,
+          moreSensitiveToLight,
+          moreSensitiveToColor,
+          moreSensitiveToSound,
+          moreSensitiveToTouch,
+          moreSensitiveToTaste,
+          moreSensitiveToSmell,
         });
 
         // If an image is uploaded, associate it with the strain
@@ -210,6 +317,7 @@ const upload = multer({
       }
     }
   );
+
 
   // GET /api/strains/current - Returns all strains posted by the current user
 router.get('/current', requireAuth, async (req, res, next) => {
@@ -233,7 +341,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             required: false
           },
           {
-            model: Review, // Assuming Reviews are linked to strains
+            model: Comment, // Assuming Reviews are linked to strains
             attributes: []
           }
         ],

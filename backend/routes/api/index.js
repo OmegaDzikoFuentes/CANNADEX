@@ -24,13 +24,8 @@ router.use("/strains", strainRouter); // Updated to Strain routes
 
 router.use('/comments', commentRouter); // Updated to Comment routes
 
-router.post('/test', (req, res) => {
-  res.json({ requestBody: req.body });
-});
 
-// Keep this route to test frontend setup in Mod 5
-router.post('/test', function (req, res) {
-  res.json({ requestBody: req.body });
-});
+
+
 
 module.exports = router;
