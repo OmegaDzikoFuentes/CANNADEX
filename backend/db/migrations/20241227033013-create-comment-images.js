@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  async up(queryInterface, Sequelize) {
     await queryInterface.createTable('CommentImages', {
       id: {
         allowNull: false,
@@ -40,7 +40,7 @@ module.exports = {
     }, options);
   },
 
-  down: async (queryInterface, Sequelize) => {
+  async down(queryInterface, Sequelize) {
     options.tableName = 'CommentImages';
     await queryInterface.dropTable(options);
   },

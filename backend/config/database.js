@@ -1,5 +1,7 @@
 // backend/config/database.js
+require('dotenv').config();
 const config = require('./index');
+console.log("Using database file:", config.dbFile);
 
 module.exports = {
   development: {
