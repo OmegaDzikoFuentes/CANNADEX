@@ -36,15 +36,10 @@ target 'MyMobileApp' do
       config[:reactNativePath],
       :mac_catalyst_enabled => false,
     )
-  end
-
-  post_install do |installer|
+  
+    # Additional configurations from the second block
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
-    react_native_post_install(
-      installer,
-      config[:reactNativePath],
-      :mac_catalyst_enabled => false,
-      # :ccache_enabled => true
-    )
+    # :ccache_enabled => true (Uncomment if needed)
   end
+  
 end

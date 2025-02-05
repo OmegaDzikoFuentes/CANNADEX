@@ -1,5 +1,6 @@
 module.exports = {
-  presets: ['module:metro-react-native-babel-preset',
+  presets: [
+    'module:metro-react-native-babel-preset',
     '@babel/preset-typescript',
     '@babel/preset-env',
   ],
@@ -8,5 +9,6 @@ module.exports = {
       moduleName: '@env',
       path: '.env',
     }],
+    '@babel/plugin-transform-flow-strip-types', // Add this plugin to strip Flow types
   ],
 };
